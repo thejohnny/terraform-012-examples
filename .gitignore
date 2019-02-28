@@ -1,0 +1,6 @@
+.envrc
+*.tfstate
+*.tfstate.backup
+.terraform
+*.tfplan
+bin/*
