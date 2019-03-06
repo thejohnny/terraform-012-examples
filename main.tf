@@ -109,3 +109,19 @@ module "consul_security_group" {
 output "security_group_arn" {
   value = module.consul_security_group.security_group.arn
 }
+
+# Template syntax
+data "template_file" "pets" {
+  template = <<EOF
+servers:
+%{for pet in random_pet.server~}
+  %{if substr(pet.id, 0, 1) == "c"~}
+  ${pet.id}.node.consul:443
+  %{endif~}
+%{endfor}
+  EOF
+}
+
+output "pets_template" {
+  value = data.template_file.pets.rendered
+}
